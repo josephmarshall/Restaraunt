@@ -14,6 +14,15 @@ class Api::MenusController < ApplicationController
     end
   end
 
+  def update
+    menu = Menu.find(params[:id])
+    if menu.update(menu_params)
+      render json: menu
+    else
+      render json: {message: "update Menu failed"}
+    end
+  end
+    
   def destroy
     Menu.find(params[:id]).destroy
     render json: {message: "Entire Menu Deleted"}

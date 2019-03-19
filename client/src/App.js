@@ -35,12 +35,25 @@ class App extends Component {
     )
   }
 
+  editMenu = (name, id) => {
+    axios.put(`/api/menus/${id}`, { name } ).then( res =>
+      this.setState({menus: this.state.menus.map(m => {
+        if (m.id === id)
+          return res.data
+        return m
+            }
+          )
+        })
+      )
+    }
+  
+
   render() {
     return (
       <Container>
         <h1>Restaraunt Menus</h1>
         <AddMenuForm addMenu={this.addMenu} /> 
-          {this.state.menus.map( menu => <Menu key={menu.id} menu={menu} menuDeleteButton={this.delete} />)}
+          {this.state.menus.map( menu => <Menu key={menu.id} menu={menu} menuDeleteButton={this.delete} editMenu={this.editMenu} />)}
       </Container>
     );
   }
